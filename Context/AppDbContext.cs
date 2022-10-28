@@ -16,12 +16,17 @@ namespace BackendSWGAF.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             
-             
+            modelBuilder.Entity<Usuario>()
+               .HasOne<UsuarioStatus>(e => e.usuariostatus)
+               .WithMany(te => te.usuarios)
+               .HasForeignKey(e => e.idStatus);
+
+
         }
         public AppDbContext() { }
         public DbSet<Category> category { get; set; }
- 
+        public DbSet<Usuario> usuario { get; set; }
+
 
     }
 }
