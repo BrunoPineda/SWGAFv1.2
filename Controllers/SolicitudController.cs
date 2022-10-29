@@ -1,24 +1,24 @@
-﻿using BackendSWGAF.Context;
-using BackendSWGAF.Helpers;
+﻿using BackendSWGAF.Helpers;
 using BackendSWGAF.Models.DTOs.Auth;
-using BackendSWGAF.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data;
+using System;
+using BackendSWGAF.Models.DTOs;
+using BackendSWGAF.Context;
+using BackendSWGAF.Models.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BackendSWGAF.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class SolicitudController : ControllerBase
     {
         private readonly AppDbContext context;
-        public UsuarioController(AppDbContext context)
+        public SolicitudController(AppDbContext context)
         {
             this.context = context;
         }
@@ -27,33 +27,37 @@ namespace BackendSWGAF.Controllers
         {
             return (myEvent.Message);
         }
+
         [HttpGet]
-        public IActionResult listarUsuarios()
+        public IActionResult listarSolicitud()
         {
-            List<Usuario> usua = context.usuario.ToList();
+            //List<Solicitud> soli = context.solicitud.ToList();
+            var query = from s in context.solicitud
+                        join u in context.usuario on s.idUsuario equals u.id
+                        select u;
 
             return Ok(new
             {
                 Res = true,
                 StatusCode = 200,
                 Message = "",
-                Data = usua
+                Data = query
             }); ; ;
         }
+
         [HttpPost]
-        public IActionResult CrearUsuario([FromForm] UsuarioRequest request)
+        public IActionResult registrarSolicitud([FromForm] SolicitudRequest request)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_registrarUsuario", CommandType.StoredProcedure,
-                 new SqlParameter("@email", request.email),
-                 new SqlParameter("@password", request.passsword),
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_registrarSolicitud", CommandType.StoredProcedure,
                  new SqlParameter("@nombre", request.nombre),
-                 new SqlParameter("@apellido", request.apellido),
-                 new SqlParameter("@docNumber", request.docNumber),
-                 new SqlParameter("@tipoDoc", request.tipoDoc),
-                 new SqlParameter("@tipoUsuario", request.tipoUsuario),
-                 new SqlParameter("@idStatus", request.idStatus)
+                 new SqlParameter("@Cantidad", request.cantidad),
+                 new SqlParameter("@tipoDePago", request.tipoDePago),
+                 new SqlParameter("@total", request.total),
+                 new SqlParameter("@fecha", request.fecha),
+                 new SqlParameter("@aceptado", request.aceptado),
+                 new SqlParameter("@idUsuario", request.idUsuario)
                  );
                 return Ok(new
                 {
@@ -74,22 +78,20 @@ namespace BackendSWGAF.Controllers
                 }); ;
             }
         }
-
         [HttpPut("{id}")]
-        public IActionResult ActualizarUsuario(int id, [FromForm] UsuarioRequest request)
+        public IActionResult ActualizarSolicitud(int id, [FromForm] SolicitudRequest request)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_ActualizarUsuario", CommandType.StoredProcedure,
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_ActualizarSolicitud", CommandType.StoredProcedure,
                  new SqlParameter("@id", id),
-                 new SqlParameter("@email", request.email),
-                 new SqlParameter("@password", request.passsword),
                  new SqlParameter("@nombre", request.nombre),
-                 new SqlParameter("@apellido", request.apellido),
-                 new SqlParameter("@docNumber", request.docNumber),
-                 new SqlParameter("@tipoDoc", request.tipoDoc),
-                 new SqlParameter("@tipoUsuario", request.tipoUsuario),
-                 new SqlParameter("@idStatus", request.idStatus)
+                 new SqlParameter("@Cantidad", request.cantidad),
+                 new SqlParameter("@tipoDePago", request.tipoDePago),
+                 new SqlParameter("@total", request.total),
+                 new SqlParameter("@fecha", request.fecha),
+                 new SqlParameter("@aceptado", request.aceptado),
+                 new SqlParameter("@idUsuario", request.idUsuario)
                  );
                 return Ok(new
                 {
@@ -115,11 +117,11 @@ namespace BackendSWGAF.Controllers
         //[Route("especialidad")]
         //[AllowAnonymous]
         //[Authorize]
-        public IActionResult EliminarUsuario(int id)
+        public IActionResult EliminarSolicitud(int id)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_EliminarUsuario", CommandType.StoredProcedure,
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_EliminarSolicitud", CommandType.StoredProcedure,
                  new SqlParameter("@id", id)
 
                  );
@@ -145,6 +147,5 @@ namespace BackendSWGAF.Controllers
             }
 
         }
-
     }
 }

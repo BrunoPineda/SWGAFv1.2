@@ -21,12 +21,16 @@ namespace BackendSWGAF.Context
                .WithMany(te => te.usuarios)
                .HasForeignKey(e => e.idStatus);
 
+            modelBuilder.Entity<Solicitud>()
+               .HasOne<Usuario>(e => e.usuario)
+               .WithMany(te => te.solicitudes)
+               .HasForeignKey(e => e.idUsuario);
+
 
         }
         public AppDbContext() { }
         public DbSet<Category> category { get; set; }
         public DbSet<Usuario> usuario { get; set; }
-
-
+        public DbSet<Solicitud> solicitud { get; set; }
     }
 }

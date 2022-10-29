@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackendSWGAF.Models.Entities
@@ -19,6 +20,8 @@ namespace BackendSWGAF.Models.Entities
         public int idStatus { get; set; }
         [ForeignKey("idStatus")]
         public UsuarioStatus usuariostatus { get; set; }
+
+        public List<Solicitud> solicitudes { get; set; }
 
     }
 }
