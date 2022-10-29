@@ -1,10 +1,14 @@
 ﻿using BackendSWGAF.Context;
+using BackendSWGAF.Helpers;
+using BackendSWGAF.Models.DTOs.Auth;
 using BackendSWGAF.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace BackendSWGAF.Controllers
@@ -35,6 +39,40 @@ namespace BackendSWGAF.Controllers
                 Message = "",
                 Data = usua
             }); ; ;
+        }
+        [HttpPost]
+        public IActionResult CrearUsuario([FromForm] UsuarioRequest request)
+        {
+            try
+            {
+                  var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_registrarUsuario", CommandType.StoredProcedure,
+                   new SqlParameter("@email", request.email),
+                   new SqlParameter("@password", request.passsword),
+                   new SqlParameter("@nombre", request.nombre),
+                   new SqlParameter("@apellido", request.apellido),
+                   new SqlParameter("@docNumber", request.docNumber),
+                   new SqlParameter("@tipoDoc", request.tipoDoc),
+                   new SqlParameter("@tipoUsuario", request.tipoUsuario),
+                   new SqlParameter("@idStatus", request.idStatus)
+                   );
+                return Ok(new
+                {
+                    Res = true,
+                    StatusCode = 200,
+                    Message = usu,
+                    Data = ""
+                }); ;
+            }
+            catch (Exception e)
+            {
+                return Ok(new
+                {
+                    Res = false,
+                    StatusCode = 500,
+                    Message = "Problema del servidor",
+                    Data = ""
+                }); ;
+            }
         }
     }
 }

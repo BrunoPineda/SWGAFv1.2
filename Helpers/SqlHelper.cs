@@ -30,6 +30,7 @@ namespace BackendSWGAF.Helpers
                 }
             //}
         }
+  
         public static string message;
         public static void InfoMessageHandler(object mySender, SqlInfoMessageEventArgs myEvent)
         {
