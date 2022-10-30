@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LUIS CORTEZ\\Desktop\\proyecto TP\\swagf.backend\\BackendSWGAF.csproj": {}
+    "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LUIS CORTEZ\\Desktop\\proyecto TP\\swagf.backend\\BackendSWGAF.csproj": {
+    "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LUIS CORTEZ\\Desktop\\proyecto TP\\swagf.backend\\BackendSWGAF.csproj",
+        "projectUniqueName": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj",
         "projectName": "BackendSWGAF",
-        "projectPath": "C:\\Users\\LUIS CORTEZ\\Desktop\\proyecto TP\\swagf.backend\\BackendSWGAF.csproj",
-        "packagesPath": "C:\\Users\\LUIS CORTEZ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LUIS CORTEZ\\Desktop\\proyecto TP\\swagf.backend\\obj\\",
+        "projectPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\LUIS CORTEZ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,8 +63,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -76,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
         }
       }
     }
