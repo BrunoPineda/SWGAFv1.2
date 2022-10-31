@@ -1,5 +1,6 @@
 ﻿using BackendSWGAF.Context;
 using BackendSWGAF.Helpers;
+using BackendSWGAF.Models.DTOs;
 using BackendSWGAF.Models.DTOs.Auth;
 using BackendSWGAF.Models.Entities;
 using Microsoft.AspNetCore.Http;
@@ -76,14 +77,13 @@ namespace BackendSWGAF.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult ActualizarUsuario(int id, [FromForm] UsuarioRequest request)
+        public IActionResult ActualizarUsuario(int id, [FromForm] AcUsuarioRequest request)
         {
             try
             {
                 var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_ActualizarUsuario", CommandType.StoredProcedure,
                  new SqlParameter("@id", id),
                  new SqlParameter("@email", request.email),
-                 new SqlParameter("@password", request.passsword),
                  new SqlParameter("@nombre", request.nombre),
                  new SqlParameter("@apellido", request.apellido),
                  new SqlParameter("@docNumber", request.docNumber),
