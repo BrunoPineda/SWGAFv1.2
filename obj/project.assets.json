@@ -5762,11 +5762,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj",
+      "projectUniqueName": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\BackendSWGAF.csproj",
       "projectName": "BackendSWGAF",
-      "projectPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\BackendSWGAF.csproj",
+      "projectPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\BackendSWGAF.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\version1.0\\SWGAF\\obj\\",
+      "outputPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",

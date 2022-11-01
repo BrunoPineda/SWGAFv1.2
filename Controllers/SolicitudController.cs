@@ -78,6 +78,36 @@ namespace BackendSWGAF.Controllers
                 }); ;
             }
         }
+
+        [HttpPut("AceptarSolicitud/{id}")]
+        public IActionResult AceptarSolicitud(int id, int estado)
+        {
+            try
+            {
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_AceptarSolicitud", CommandType.StoredProcedure,
+                 new SqlParameter("@id", id),
+                 new SqlParameter("@Aceptado", estado)
+                 );
+                return Ok(new
+                {
+                    Res = true,
+                    StatusCode = 200,
+                    Message = usu,
+                    Data = ""
+                }); ;
+            }
+            catch (Exception e)
+            {
+                return Ok(new
+                {
+                    Res = false,
+                    StatusCode = 500,
+                    Message = "Problema del servidor",
+                    Data = ""
+                }); ;
+            }
+        }
+
         [HttpPut("{id}")]
         public IActionResult ActualizarSolicitud(int id, [FromForm] SolicitudRequest request)
         {

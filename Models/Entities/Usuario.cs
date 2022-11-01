@@ -9,7 +9,7 @@ namespace BackendSWGAF.Models.Entities
         [Key]
         public int id { get; set; }
         public string email { get; set; }
-        public string passsword { get; set; }
+        public byte[] passsword { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
         public int docNumber { get; set; }
