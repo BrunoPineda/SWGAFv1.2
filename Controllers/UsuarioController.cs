@@ -58,7 +58,7 @@ namespace BackendSWGAF.Controllers
             }); ; ;
         }
         [HttpPost]
-        public IActionResult CrearUsuario([FromForm] UsuarioRequest request)
+        public IActionResult CrearUsuario([FromBody] UsuarioRequest request)
         {
             try
             {
@@ -86,14 +86,14 @@ namespace BackendSWGAF.Controllers
                 {
                     Res = false,
                     StatusCode = 500,
-                    Message = "Problema del servidor",
+                    Message = "Problema del servidor "+e,
                     Data = ""
                 }); ;
             }
         }
 
         [HttpPut("{id}")]
-        public IActionResult ActualizarUsuario(int id, [FromForm] AcUsuarioRequest request)
+        public IActionResult ActualizarUsuario(int id, [FromBody] AcUsuarioRequest request)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace BackendSWGAF.Controllers
 
         [HttpPut("habilitar/{id}")] 
          
-        public IActionResult HabilitarUsuario(int id)
+        public IActionResult HabilitarUsuario([FromBody] int id)
         {
             try
             {

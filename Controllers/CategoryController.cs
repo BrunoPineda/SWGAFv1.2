@@ -45,7 +45,7 @@ namespace BackendSWGAF.Controllers
             }); ; ;
         }
         [HttpPost]
-        public IActionResult crearCategoria([FromForm] CategoryRequest request)
+        public IActionResult crearCategoria([FromBody] CategoryRequest request)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace BackendSWGAF.Controllers
         }
         [HttpPut("{id}")]
 
-        public IActionResult ActualizarCategoria(int id, CategoryRequest request)
+        public IActionResult ActualizarCategoria(int id, [FromBody] CategoryRequest request)
         {
             try
             {

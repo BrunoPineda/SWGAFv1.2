@@ -46,7 +46,7 @@ namespace BackendSWGAF.Controllers
         }
 
         [HttpPost]
-        public IActionResult registrarSolicitud([FromForm] SolicitudRequest request)
+        public IActionResult registrarSolicitud([FromBody] SolicitudRequest request)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace BackendSWGAF.Controllers
         }
 
         [HttpPut("AceptarSolicitud/{id}")]
-        public IActionResult AceptarSolicitud(int id, int estado)
+        public IActionResult AceptarSolicitud([FromBody] int id, int estado)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace BackendSWGAF.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult ActualizarSolicitud(int id, [FromForm] SolicitudRequest request)
+        public IActionResult ActualizarSolicitud(int id, [FromBody] SolicitudRequest request)
         {
             try
             {
