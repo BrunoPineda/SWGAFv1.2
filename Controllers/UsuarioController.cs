@@ -3,6 +3,7 @@ using BackendSWGAF.Helpers;
 using BackendSWGAF.Models.DTOs;
 using BackendSWGAF.Models.DTOs.Auth;
 using BackendSWGAF.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace BackendSWGAF.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class UsuarioController : ControllerBase
     {
         private readonly AppDbContext context;

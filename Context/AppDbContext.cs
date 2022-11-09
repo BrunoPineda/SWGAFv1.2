@@ -26,11 +26,30 @@ namespace BackendSWGAF.Context
                .WithMany(te => te.solicitudes)
                .HasForeignKey(e => e.idUsuario);
 
+            modelBuilder.Entity<Producto>()
+               .HasOne<Category>(p => p.categoria)
+               .WithMany(c => c.productos)
+               .HasForeignKey(p => p.idCategory);
+
+            modelBuilder.Entity<Producto>()
+               .HasOne<ProductoStatus>(p => p.productoStatus)
+               .WithMany(c => c.productos)
+               .HasForeignKey(p => p.idStatus);
+
+            modelBuilder.Entity<Producto>()
+              .HasOne<Rack>(p => p.rack)
+              .WithMany(c => c.productos)
+              .HasForeignKey(p => p.idRack);
+
 
         }
         public AppDbContext() { }
         public DbSet<Category> category { get; set; }
         public DbSet<Usuario> usuario { get; set; }
         public DbSet<Solicitud> solicitud { get; set; }
+        public DbSet<Producto> producto { get; set; }
+        public DbSet<Rack> rack { get; set; }
+
+        public DbSet<ProductoStatus> productostatus { get; set; }
     }
 }
