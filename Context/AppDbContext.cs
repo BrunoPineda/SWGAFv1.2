@@ -51,5 +51,6 @@ namespace BackendSWGAF.Context
         public DbSet<Rack> rack { get; set; }
 
         public DbSet<ProductoStatus> productostatus { get; set; }
+        public DbSet<UsuarioStatus> usuariostatus { get; set; }
     }
 }

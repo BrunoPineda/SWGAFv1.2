@@ -5762,11 +5762,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\BackendSWGAF.csproj",
+      "projectUniqueName": "H:\\Datos 8vo ciclo\\tp4\\iteración3\\swagf.backend\\BackendSWGAF.csproj",
       "projectName": "BackendSWGAF",
-      "projectPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\BackendSWGAF.csproj",
+      "projectPath": "H:\\Datos 8vo ciclo\\tp4\\iteración3\\swagf.backend\\BackendSWGAF.csproj",
       "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-      "outputPath": "H:\\Datos 8vo ciclo\\tp4\\progra\\swagf.backend\\obj\\",
+      "outputPath": "H:\\Datos 8vo ciclo\\tp4\\iteración3\\swagf.backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5830,7 +5830,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.305\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }

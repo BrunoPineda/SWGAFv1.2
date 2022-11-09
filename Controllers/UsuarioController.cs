@@ -93,6 +93,37 @@ namespace BackendSWGAF.Controllers
                 }); ;
             }
         }
+        [HttpPost("/usuarioStatus/")]
+        public IActionResult CrearUsuarioStatus([FromBody] UsuarioStatusRequest request)
+        {
+            try
+            {
+                UsuarioStatus us = new UsuarioStatus()
+                {
+                    valor = request.valor,
+                    descripcion = request.descripcion,
+                };
+                context.usuariostatus.Add(us);
+                context.SaveChanges();
+                return Ok(new
+                {
+                    Res = true,
+                    StatusCode = 200,
+                    Message = us,
+                    Data = ""
+                }); ;
+            }
+            catch (Exception e)
+            {
+                return Ok(new
+                {
+                    Res = false,
+                    StatusCode = 500,
+                    Message = "Problema del servidor " + e,
+                    Data = ""
+                }); ;
+            }
+        }
 
         [HttpPut("{id}")]
         public IActionResult ActualizarUsuario(int id, [FromBody] AcUsuarioRequest request)

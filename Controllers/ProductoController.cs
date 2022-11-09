@@ -42,8 +42,6 @@ namespace BackendSWGAF.Controllers
                 ,laboratorio=p.laboratorio,fechaVencimiento=p.fechaVencimiento,
                 marca=p.marca,rack=p.rack.valor,estado = p.productoStatus.descripcion }).ToList();
             
-
-
             return Ok(new
             {
                 Res = true,
@@ -52,7 +50,37 @@ namespace BackendSWGAF.Controllers
                 Data = soli
             }); ; ;
         }
-
+        [HttpPost("/productStatus")]
+        public IActionResult registrarProductoStatus([FromBody] ProductoStatusRequest request)
+        {
+            try
+            {
+                ProductoStatus ps = new ProductoStatus()
+                {
+                    valor = request.valor,
+                    descripcion = request.descripcion
+                };
+                context.productostatus.Add(ps);
+                context.SaveChanges();
+                return Ok(new
+                {
+                    Res = true,
+                    StatusCode = 200,
+                    Message = ps,
+                    Data = ""
+                }); ;
+            }
+            catch (Exception e)
+            {
+                return Ok(new
+                {
+                    Res = false,
+                    StatusCode = 500,
+                    Message = "Problema del servidor" + e,
+                    Data = ""
+                }); ;
+            }
+        }
         [HttpPost]
         public IActionResult registrarProducto([FromBody] ProductoRequest request)
         {

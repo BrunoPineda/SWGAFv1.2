@@ -31,17 +31,17 @@ namespace BackendSWGAF.Controllers
         [HttpGet]
         public IActionResult listarSolicitud()
         {
-            //List<Solicitud> soli = context.solicitud.ToList();
-            var query = from s in context.solicitud
+            List<Solicitud> soli = context.solicitud.ToList();
+           /* var query = from s in context.solicitud
                         join u in context.usuario on s.idUsuario equals u.id
-                        select u;
+                        select u;*/
 
             return Ok(new
             {
                 Res = true,
                 StatusCode = 200,
                 Message = "",
-                Data = query
+                Data = soli
             }); ; ;
         }
 
