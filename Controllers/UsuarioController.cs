@@ -48,16 +48,8 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosHabilitados/{id}")]
         public IActionResult listarUsuariosHabilitadosporid(int id)
         {
-
-            var usua = context.usuario.OrderByDescending(e => e.idStatus == 1)
-                .FirstOrDefault(e => e.id == id);
-            /* 
-             * no valida
-             * var usua = from u in context.usuario
-                       where u.idStatus == 1 
-                       where u.id == id
-                       select u;
-            */
+            var usua = context.usuario
+                .FirstOrDefault(e => e.id == id && e.idStatus == 1);
 
             if (usua == null)
             {
@@ -105,14 +97,15 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosInhabilitados/{id}")]
         public IActionResult listarUsuariosInhabilitados(int id)
         {
-            /*
-            var usua = context.usuario.OrderByDescending(e => e.idStatus == 2)
-                .FirstOrDefault(e => e.id == id);
-            */
+            
+            var usua = context.usuario
+                .FirstOrDefault(e => e.id == id && e.idStatus == 2);
+           /*  
             var usua = from u in context.usuario
                        where u.idStatus == 2
                        where u.id == id
                        select u;
+           */
             if (usua == null)
             {
                 return NotFound(new
