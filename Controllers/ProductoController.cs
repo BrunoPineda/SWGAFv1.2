@@ -50,6 +50,39 @@ namespace BackendSWGAF.Controllers
                 Data = soli
             }); ; ;
         }
+        [HttpGet("{id}")]
+        public IActionResult listarProductoPorId(int id)
+        {
+            var soli = context.producto.Include(p => p.rack).Include(p => p.productoStatus).Include(p => p.categoria).Select(p => new {
+                id = p.id,
+                nombre = p.nombre,
+                pVenta = p.pVenta,
+                pCompra = p.pCompra
+                ,
+                laboratorio = p.laboratorio,
+                fechaVencimiento = p.fechaVencimiento,
+                marca = p.marca,
+                rack = p.rack.valor,
+                estado = p.productoStatus.descripcion
+            }).FirstOrDefault(p => p.id == id);
+            if (soli == null)
+            {
+                return NotFound(new
+                {
+                    Res = true,
+                    StatusCode = 404,
+                    Message = "Producto no encontrado",
+                    Data = soli
+                }); ; ;
+            }
+            return Ok(new
+            {
+                Res = true,
+                StatusCode = 200,
+                Message = "",
+                Data = soli
+            }); ; ;
+        }
         [HttpPost("/productStatus")]
         public IActionResult registrarProductoStatus([FromBody] ProductoStatusRequest request)
         {

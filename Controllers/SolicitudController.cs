@@ -44,6 +44,31 @@ namespace BackendSWGAF.Controllers
                 Data = soli
             }); ; ;
         }
+        [HttpGet("{id}")]
+        public IActionResult listarSolicitudporid(int id)
+        {
+            var soli = context.solicitud.FirstOrDefault(p => p.id == id);
+            /* var query = from s in context.solicitud
+                         join u in context.usuario on s.idUsuario equals u.id
+                         select u;*/
+            if (soli == null)
+            {
+                return NotFound(new
+                {
+                    Res = true,
+                    StatusCode = 404,
+                    Message = "Solicitud no encontrada",
+                    Data = soli
+                }); ; ;
+            }
+            return Ok(new
+            {
+                Res = true,
+                StatusCode = 200,
+                Message = "",
+                Data = soli
+            }); ; ;
+        }
 
         [HttpPost]
         public IActionResult registrarSolicitud([FromBody] SolicitudRequest request)

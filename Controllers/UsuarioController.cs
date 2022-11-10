@@ -45,12 +45,31 @@ namespace BackendSWGAF.Controllers
                 Data = usua
             }); ; ;
         }
-        [HttpGet("UsuariosInhabilitados")]
-        public IActionResult listarUsuariosInhabilitados()
+        [HttpGet("UsuariosHabilitados/{id}")]
+        public IActionResult listarUsuariosHabilitadosporid(int id)
         {
-            var usua = from u in context.usuario
-                       where u.idStatus == 2
+
+            var usua = context.usuario.OrderByDescending(e => e.idStatus == 1)
+                .FirstOrDefault(e => e.id == id);
+            /* 
+             * no valida
+             * var usua = from u in context.usuario
+                       where u.idStatus == 1 
+                       where u.id == id
                        select u;
+            */
+
+            if (usua == null)
+            {
+                return NotFound(new
+                {
+                    Res = true,
+                    StatusCode = 404,
+                    Message = "Usuario no encontrado",
+                    Data = usua
+                }); ; ;
+            }
+
             return Ok(new
             {
                 Res = true,
@@ -58,6 +77,62 @@ namespace BackendSWGAF.Controllers
                 Message = "",
                 Data = usua
             }); ; ;
+        }
+        [HttpGet("UsuariosInhabilitados")]
+        public IActionResult listarUsuariosInhabilitados()
+        {
+            var usua = from u in context.usuario
+                       where u.idStatus == 2
+                       select u;
+            if (usua == null)
+            {
+                return NotFound(new
+                {
+                    Res = true,
+                    StatusCode = 404,
+                    Message = "Usuario no encontrado",
+                    Data = usua
+                }); ; ;
+            }
+            return Ok(new
+            {
+                Res = true,
+                StatusCode = 200,
+                Message = "",
+                Data = usua
+            }); ; ;
+        }
+        [HttpGet("UsuariosInhabilitados/{id}")]
+        public IActionResult listarUsuariosInhabilitados(int id)
+        {
+            /*
+            var usua = context.usuario.OrderByDescending(e => e.idStatus == 2)
+                .FirstOrDefault(e => e.id == id);
+            */
+            var usua = from u in context.usuario
+                       where u.idStatus == 2
+                       where u.id == id
+                       select u;
+            if (usua == null)
+            {
+                return NotFound(new
+                {
+                    Res = true,
+                    StatusCode = 404,
+                    Message = "Usuario no encontrado",
+                    Data = usua
+                }); ; ;
+            }
+            else { 
+
+            return Ok(new
+            {
+                Res = true,
+                StatusCode = 200,
+                Message = "",
+                Data = usua
+            }); ; ;
+            }
         }
         [HttpPost]
         public IActionResult CrearUsuario([FromBody] UsuarioRequest request)
