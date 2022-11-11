@@ -53,12 +53,14 @@ namespace BackendSWGAF.Controllers
         [HttpGet("{id}")]
         public IActionResult listarProductoPorId(int id)
         {
-            var soli = context.producto.Include(p => p.rack).Include(p => p.productoStatus).Include(p => p.categoria).Select(p => new {
+            var soli = context.producto.
+                Include(p => p.rack).
+                Include(p => p.productoStatus).
+                Include(p => p.categoria).Select(p => new {
                 id = p.id,
                 nombre = p.nombre,
                 pVenta = p.pVenta,
-                pCompra = p.pCompra
-                ,
+                pCompra = p.pCompra,
                 laboratorio = p.laboratorio,
                 fechaVencimiento = p.fechaVencimiento,
                 marca = p.marca,
