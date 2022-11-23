@@ -20,7 +20,7 @@ namespace BackendSWGAF.Models.Entities
         public int idStatus { get; set; }
         [ForeignKey("idStatus")]
         public UsuarioStatus usuariostatus { get; set; }
-
+        public Factura factura { get; set; }
         public List<Solicitud> solicitudes { get; set; }
 
     }

@@ -39,7 +39,7 @@ namespace BackendSWGAF.Controllers
 
             try
             { 
-                var cons = context.usuario.Where(u => u.email == request.email).Select(u => new { email=u.email,nombre=u.nombre,apellido=u.apellido,tipoUsuario=u.tipoUsuario,idusuario=u.idStatus }).FirstOrDefault();
+                var cons = context.usuario.Where(u => u.email == request.email).Select(u => new { email=u.email,nombre=u.nombre,apellido=u.apellido,tipoUsuario=u.tipoUsuario,idusuario=u.id }).FirstOrDefault();
 
                 var log = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_login", CommandType.StoredProcedure,
                 new SqlParameter("@email", request.email),

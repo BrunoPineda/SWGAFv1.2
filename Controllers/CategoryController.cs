@@ -34,7 +34,7 @@ namespace BackendSWGAF.Controllers
         [HttpGet]
         public IActionResult listarCategoria()
         {
-            List<Category> categoria = context.category.ToList();
+            List<Category> categoria = context.category.Where(p => p.estado == 1).ToList();
 
             return Ok(new
             {
@@ -77,7 +77,6 @@ namespace BackendSWGAF.Controllers
             }
         }
         [HttpPut("{id}")]
-
         public IActionResult ActualizarCategoria(int id, [FromBody] CategoryRequest request)
         {
             try
@@ -96,9 +95,7 @@ namespace BackendSWGAF.Controllers
                 cat.valor = request.valor;
                 cat.descripcion = request.descripcion;
                 cat.estado = request.estado;
-
                 context.SaveChanges();
-
             }
             catch (Exception e)
             {
@@ -110,7 +107,6 @@ namespace BackendSWGAF.Controllers
                     Data = ""
                 });
             }
-
             return Ok(new
             {
                 Res = true,
@@ -120,48 +116,5 @@ namespace BackendSWGAF.Controllers
             }); ;
 
         }
-        [HttpDelete("{id}")]
-        //[Route("especialidad")]
-        //[AllowAnonymous]
-        //[Authorize]
-        public IActionResult EliminarCategoria(int id)
-        {
-            try
-            {
-                Category ope = context.category.FirstOrDefault(e => e.id == id);
-                if (ope == null)
-                {
-                    return NotFound(new
-                    {
-                        Res = false,
-                        StatusCode = 404,
-                        Message = "La Categoria no existe",
-                        Data = ""
-                    });
-                }
-                context.category.Remove(ope);
-                context.SaveChanges();
-                return Ok(new
-                {
-                    Res = true,
-                    StatusCode = 200,
-                    Message = "Categoria eliminada correctamente",
-                    Data = ""
-                }); ;
-            }
-            catch (Exception e)
-            {
-                return Ok(new
-                {
-                    Res = false,
-                    StatusCode = 500,
-                    Message = "Problema del servidor " + e.Message,
-                    Data = ""
-                });
-            }
-
-        }
-
-
     }
 }

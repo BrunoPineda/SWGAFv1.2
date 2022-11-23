@@ -41,6 +41,30 @@ namespace BackendSWGAF.Context
               .WithMany(c => c.productos)
               .HasForeignKey(p => p.idRack);
 
+            modelBuilder.Entity<Kardex>()
+              .HasOne<Factura>(p => p.factura)
+              .WithMany(c => c.kardexs)
+              .HasForeignKey(p => p.id);
+
+            modelBuilder.Entity<productoHasFactura>()
+              .HasOne<Factura>(p => p.factura)
+              .WithMany(c => c.productoHasFacturas)
+              .HasForeignKey(p => p.IdFactura);
+
+            modelBuilder.Entity<productoHasFactura>()
+              .HasOne<Producto>(p => p.producto)
+              .WithMany(c => c.productoHasFacturas)
+              .HasForeignKey(p => p.IdProducto);
+
+            modelBuilder.Entity<solicitudhasProducto>()
+            .HasOne<Solicitud>(p => p.solicitud)
+            .WithMany(c => c.solicitudhasProductos)
+            .HasForeignKey(p => p.IdSolicitud);
+
+            modelBuilder.Entity<solicitudhasProducto>()
+           .HasOne<Producto>(p => p.producto)
+           .WithMany(c => c.solicitudhasProductos)
+           .HasForeignKey(p => p.IdProducto);
 
         }
         public AppDbContext() { }
@@ -49,6 +73,10 @@ namespace BackendSWGAF.Context
         public DbSet<Solicitud> solicitud { get; set; }
         public DbSet<Producto> producto { get; set; }
         public DbSet<Rack> rack { get; set; }
+        public DbSet<Kardex> kardex { get; set; }
+        public DbSet<Factura> factura { get; set; }
+        public DbSet<solicitudhasProducto> solicitudhasProducto { get; set; }
+        public DbSet<productoHasFactura> productoHasFactura { get; set; }
 
         public DbSet<ProductoStatus> productostatus { get; set; }
         public DbSet<UsuarioStatus> usuariostatus { get; set; }

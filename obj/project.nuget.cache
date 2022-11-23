@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GTdKXagWd8S0gIEMXj4mF7Kwq/4dDKFjPzmQavL8u7mpsIeo1ZAySVwAC6t3N31b8LXH+XfK5gnYXnu6/snw4g==",
+  "dgSpecHash": "XHfeeNhUouUloDdMLhlWpxg5UUQcTzJF20RTFoFykpJHTTr8I3sBErdYCSkpY2u56MFDX7HISdG0yb/9ktAn4A==",
   "success": true,
-  "projectFilePath": "H:\\Datos 8vo ciclo\\tp4\\iteración3\\swagf.backend\\BackendSWGAF.csproj",
+  "projectFilePath": "H:\\Datos 8vo ciclo\\tp4\\git\\c\\SWGAF1.2\\BackendSWGAF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.23\\microsoft.aspnetcore.jsonpatch.3.1.23.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.23\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.23.nupkg.sha512",

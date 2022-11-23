@@ -13,6 +13,5 @@ namespace BackendSWGAF.Models.Entities
 
         public string descripcion { get; set; }
 
-        public int estado { get; set; }
     }
 }

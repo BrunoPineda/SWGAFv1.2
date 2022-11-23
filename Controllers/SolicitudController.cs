@@ -75,20 +75,35 @@ namespace BackendSWGAF.Controllers
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_registrarSolicitud", CommandType.StoredProcedure,
-                 new SqlParameter("@nombre", request.nombre),
-                 new SqlParameter("@Cantidad", request.cantidad),
-                 new SqlParameter("@tipoDePago", request.tipoDePago),
-                 new SqlParameter("@total", request.total),
-                 new SqlParameter("@fecha", request.fecha),
-                 new SqlParameter("@aceptado", request.aceptado),
-                 new SqlParameter("@idUsuario", request.idUsuario)
-                 );
+                var existsStatusId = context.usuariostatus.Where(p => p.id == request.idUsuario).FirstOrDefault();
+                if (existsStatusId == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "El estado id de solicitud no existe",
+                        Data = ""
+                    }); ;
+                }
+                Solicitud sol = new Solicitud()
+                {
+                  descripcion = request.descripcion,
+                  cantProductos = request.cantProductos,
+                  tipoDePago = request.tipoDePago,
+                  tipoDeMoneda = request.tipoDeMoneda,
+                  totaPrecio = request.totaPrecio,
+                  fecha = request.fecha,
+                  aceptado = request.aceptado,
+                  idUsuario = request.idUsuario,
+                };
+                context.solicitud.Add(sol);
+                context.SaveChanges();
                 return Ok(new
                 {
                     Res = true,
                     StatusCode = 200,
-                    Message = usu,
+                    Message = "Se inserto la solicitud correctamente",
                     Data = ""
                 }); ;
             }
@@ -98,28 +113,38 @@ namespace BackendSWGAF.Controllers
                 {
                     Res = false,
                     StatusCode = 500,
-                    Message = "Problema del servidor",
+                    Message = "Problema del servidor" +e,
                     Data = ""
                 }); ;
             }
         }
 
         [HttpPut("AceptarSolicitud/{id}")]
-        public IActionResult AceptarSolicitud([FromBody] int id, int estado)
+        public IActionResult AceptarSolicitud(int id, [FromBody] AcSoliRequest request)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_AceptarSolicitud", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id),
-                 new SqlParameter("@Aceptado", estado)
-                 );
+                Solicitud sol = context.solicitud.FirstOrDefault(e => e.id == id);
+                if (sol == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "La solicitud no existe",
+                        Data = ""
+                    });
+                }
+                sol.aceptado = request.aceptado;
+
+                context.SaveChanges();
                 return Ok(new
                 {
                     Res = true,
                     StatusCode = 200,
-                    Message = usu,
+                    Message = "Se aprobo la solicitud",
                     Data = ""
-                }); ;
+                });
             }
             catch (Exception e)
             {
@@ -138,33 +163,43 @@ namespace BackendSWGAF.Controllers
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_ActualizarSolicitud", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id),
-                 new SqlParameter("@nombre", request.nombre),
-                 new SqlParameter("@Cantidad", request.cantidad),
-                 new SqlParameter("@tipoDePago", request.tipoDePago),
-                 new SqlParameter("@total", request.total),
-                 new SqlParameter("@fecha", request.fecha),
-                 new SqlParameter("@aceptado", request.aceptado),
-                 new SqlParameter("@idUsuario", request.idUsuario)
-                 );
+                Solicitud sol = context.solicitud.FirstOrDefault(e => e.id == id);
+                if (sol == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "La solicitud no existe",
+                        Data = ""
+                    });
+
+                }
+                sol.descripcion = request.descripcion;
+                sol.cantProductos = request.cantProductos;
+                sol.tipoDePago = request.tipoDePago;
+                sol.tipoDeMoneda = request.tipoDeMoneda;
+                sol.totaPrecio = request.totaPrecio;
+                sol.fecha = request.fecha;
+
+                context.SaveChanges();
                 return Ok(new
                 {
                     Res = true,
                     StatusCode = 200,
-                    Message = usu,
+                    Message = "Se actualizo la solicitud",
                     Data = ""
-                }); ;
+                });
             }
             catch (Exception e)
             {
-                return Ok(new
+                return BadRequest(new
                 {
                     Res = false,
                     StatusCode = 500,
-                    Message = "Problema del servidor",
+                    Message = "Error en el servidor " + e.Message,
                     Data = ""
-                }); ;
+                });
             }
         }
 
@@ -176,19 +211,26 @@ namespace BackendSWGAF.Controllers
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_EliminarSolicitud", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id)
-
-                 );
-
-
+                Solicitud sol = context.solicitud.FirstOrDefault(e => e.id == id);
+                if (sol == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "La Solicitud no existe",
+                        Data = ""
+                    });
+                }
+                context.solicitud.Remove(sol);
+                context.SaveChanges();
                 return Ok(new
                 {
                     Res = true,
                     StatusCode = 200,
-                    Message = usu,
+                    Message = "Se elimino la solicitud correctamente",
                     Data = ""
-                }); ;
+                });
             }
             catch (Exception e)
             {

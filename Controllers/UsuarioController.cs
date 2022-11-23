@@ -34,9 +34,22 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosHabilitados")]
         public IActionResult listarUsuariosHabilitados()
         {
+            //List<Usuario> usua = context.usuario.ToList();
+            var usua = context.usuario.Where(p => p.idStatus == 1).Select(p => new {
+                id = p.id,
+                email = p.email,    
+                nombre = p.nombre,
+                apellido = p.apellido,
+                docNumber = p.docNumber,    
+                tipoDoc = p.tipoDoc,
+                tipoUsuario = p.tipoUsuario,
+                idStatus = p.idStatus,  
+            }).ToList();
+            /*
             var usua = from u in context.usuario
                        where u.idStatus == 1
                        select u;
+            */
             return Ok(new
             {
                 Res = true,
@@ -48,8 +61,16 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosHabilitados/{id}")]
         public IActionResult listarUsuariosHabilitadosporid(int id)
         {
-            var usua = context.usuario
-                .FirstOrDefault(e => e.id == id && e.idStatus == 1);
+            var usua = context.usuario.Where(p => p.idStatus == 2).Select(p => new {
+                id = p.id,
+                email = p.email,
+                nombre = p.nombre,
+                apellido = p.apellido,
+                docNumber = p.docNumber,
+                tipoDoc = p.tipoDoc,
+                tipoUsuario = p.tipoUsuario,
+                idStatus = p.idStatus,
+            }).FirstOrDefault(e => e.id == id && e.idStatus == 1);
 
             if (usua == null)
             {
@@ -73,9 +94,17 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosInhabilitados")]
         public IActionResult listarUsuariosInhabilitados()
         {
-            var usua = from u in context.usuario
-                       where u.idStatus == 2
-                       select u;
+            var usua = context.usuario.Select(p => new {
+                id = p.id,
+                email = p.email,
+                nombre = p.nombre,
+                apellido = p.apellido,
+                docNumber = p.docNumber,
+                tipoDoc = p.tipoDoc,
+                tipoUsuario = p.tipoUsuario,
+                idStatus = p.idStatus,
+            }).FirstOrDefault(p => p.idStatus == 2);
+
             if (usua == null)
             {
                 return NotFound(new
@@ -97,15 +126,23 @@ namespace BackendSWGAF.Controllers
         [HttpGet("UsuariosInhabilitados/{id}")]
         public IActionResult listarUsuariosInhabilitados(int id)
         {
-            
-            var usua = context.usuario
-                .FirstOrDefault(e => e.id == id && e.idStatus == 2);
-           /*  
-            var usua = from u in context.usuario
-                       where u.idStatus == 2
-                       where u.id == id
-                       select u;
-           */
+
+            var usua = context.usuario.Select(p => new {
+                id = p.id,
+                email = p.email,
+                nombre = p.nombre,
+                apellido = p.apellido,
+                docNumber = p.docNumber,
+                tipoDoc = p.tipoDoc,
+                tipoUsuario = p.tipoUsuario,
+                idStatus = p.idStatus,
+            }).FirstOrDefault(e => e.id == id && e.idStatus == 2);
+            /*  
+             var usua = from u in context.usuario
+                        where u.idStatus == 2
+                        where u.id == id
+                        select u;
+            */
             if (usua == null)
             {
                 return NotFound(new
@@ -132,6 +169,19 @@ namespace BackendSWGAF.Controllers
         {
             try
             {
+                 //var existsStatusId = context.usuario.Select(p => new {idStatus=p.idStatus}).Where(u => u.idStatus == request.idStatus).Firstor();
+                var existsStatusId = context.usuariostatus.Where(p=>p.id==request.idStatus).FirstOrDefault();
+                if (existsStatusId == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "El estado id de usuario no existe"+existsStatusId,
+                        Data = ""
+                    }); ;
+                }
+                
                 var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_registrarUsuario", CommandType.StoredProcedure,
                  new SqlParameter("@email", request.email),
                  new SqlParameter("@password", request.passsword),
@@ -142,13 +192,17 @@ namespace BackendSWGAF.Controllers
                  new SqlParameter("@tipoUsuario", request.tipoUsuario),
                  new SqlParameter("@idStatus", request.idStatus)
                  );
-                return Ok(new
-                {
-                    Res = true,
-                    StatusCode = 200,
-                    Message = usu,
-                    Data = ""
-                }); ;
+                
+                    return Ok(new
+                    {
+                        Res = true,
+                        StatusCode = 200,
+                        Message = usu,
+                        Data = ""
+                    }); ;
+                
+               
+               
             }
             catch (Exception e)
             {
@@ -199,15 +253,15 @@ namespace BackendSWGAF.Controllers
             try
             {
                 var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_ActualizarUsuario", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id),
-                 new SqlParameter("@email", request.email),
-                 new SqlParameter("@nombre", request.nombre),
-                 new SqlParameter("@apellido", request.apellido),
-                 new SqlParameter("@docNumber", request.docNumber),
-                 new SqlParameter("@tipoDoc", request.tipoDoc),
-                 new SqlParameter("@tipoUsuario", request.tipoUsuario),
-                 new SqlParameter("@idStatus", request.idStatus)
-                 );
+                   new SqlParameter("@id", id),
+                    new SqlParameter("@email", request.email),
+                   new SqlParameter("@nombre", request.nombre),
+                   new SqlParameter("@apellido", request.apellido),
+                   new SqlParameter("@docNumber", request.docNumber),
+                   new SqlParameter("@tipoDoc", request.tipoDoc),
+                   new SqlParameter("@tipoUsuario", request.tipoUsuario)
+                   );
+
                 return Ok(new
                 {
                     Res = true,
@@ -222,7 +276,7 @@ namespace BackendSWGAF.Controllers
                 {
                     Res = false,
                     StatusCode = 500,
-                    Message = "Problema del servidor",
+                    Message = "Problema del servidor" +e,
                     Data = ""
                 }); ;
             }
@@ -230,13 +284,25 @@ namespace BackendSWGAF.Controllers
 
         [HttpPut("habilitar/{id}")] 
          
-        public IActionResult HabilitarUsuario([FromBody] int id)
+        public IActionResult HabilitarUsuario(int id)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_HabilitarUsuario", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id)
-                 );
+                var Existid = context.usuario.Select(p => new { id = p.id }).Where(u => u.id == id).FirstOrDefault();
+                if (Existid == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "El id de usuario no existe",
+                        Data = ""
+                    }); ;
+                }
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "[sp_HabilitarUsuario]", CommandType.StoredProcedure,
+                   new SqlParameter("@id", id)
+                   );
+
                 return Ok(new
                 {
                     Res = true,
@@ -251,26 +317,31 @@ namespace BackendSWGAF.Controllers
                 {
                     Res = false,
                     StatusCode = 500,
-                    Message = "Problema del servidor",
+                    Message = "Problema del servidor" +e ,
                     Data = ""
                 }); ;
             }
         } 
 
         [HttpDelete("{id}")]
-        //[Route("especialidad")]
-        //[AllowAnonymous]
-        //[Authorize]
         public IActionResult EliminarUsuario(int id)
         {
             try
             {
-                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "sp_EliminarUsuario", CommandType.StoredProcedure,
-                 new SqlParameter("@id", id)
-
-                 );
-
-
+                var Existid = context.usuario.Select(p => new { id = p.id}).Where(u => u.id == id).FirstOrDefault();
+                if (Existid == null)
+                {
+                    return NotFound(new
+                    {
+                        Res = false,
+                        StatusCode = 404,
+                        Message = "El id de usuario no existe",
+                        Data = ""
+                    }); ;
+                }
+                var usu = SqlHelper.ExecuteNonQueryShowMessage(context, "[sp_EliminarUsuario]", CommandType.StoredProcedure,
+                new SqlParameter("@id", id)
+                );
                 return Ok(new
                 {
                     Res = true,
